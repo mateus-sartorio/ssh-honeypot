@@ -58,51 +58,41 @@ For simulating a brute attack on the decoy ssh host, we are going to use [Medusa
 <br>
 
 
-## ⚙️ Run experiment locally
+## ⚙️ Try it for yourself
+
+
 
 ### Requirements:
 
 - Docker ([Instalation instructions for each operating system](https://docs.docker.com/engine/install))
-- Medusa ([Instalation instructions] (https://github.com/jmk-foofus/medusa))
+- Cowrie ([Instalation instructions](https://github.com/cowrie/cowrie))
+- Medusa ([Instalation instructions](https://github.com/jmk-foofus/medusa))
 
-Before starting, make sure you have all the requirements to run the project.
-
-To check the Node.js version installed on your machine, run the following command:
+Clone the repository locally. Then, navigate to the directory of the cloned repository:
 
 ```bash
-node --version
+git clone https://github.com/mateus-sartorio/ssh-honeypot
+cd ssh-honeypot
 ```
+
+For running Cowrie, we can choose between configuring it to run natively or throuh a docker container. We went with th docker container, and highly recommend you to do the same, as it much faster and simpler, much less likely to run into any problems, and it allows us to concentrate on the experiment itself.
+
+Cowrie provides us with a docker image, that we can configure when creating a container from it. To do so, we can use some default configuration files that should be placed inside a volume. For this experiment, we need only `userdb.txt`, that can be found inside `etc` folder. All other configuration files should be placed here as well. We defined a `root` user with password `ewA9w`.
+
+A list of all possible files and configurations can be found on [Cowrie's official documentation](https://cowrie.readthedocs.io/en/latest/README.html#configuring-cowrie-in-docker).
+
+To start you ssh-honeypot, simply run the following command on the cloned repository root directory:
+
+```bash
+docker compose up
+```
+
+This should start your decoy ssh host.
 
 > [!TIP]
 > If your Node.js version is not 18 or above, it is recommended to use `nvm`, which allows you to install and manage multiple versions of Node.js on your machine.
 >
 > [Repository with installation instructions](https://github.com/nvm-sh/nvm)
-
-
-After installing Node.js, install Yarn package manager:
-
-```bash
-npm install --global yarn
-```
-
-
-### Running the application
-
-Clone the repository locally. Then, navigate to the directory of the cloned repository:
-
-```bash
-git clone https://github.com/mateus-sartorio/descentralized-pik-with-blockchain-frontend frontend
-cd frontend
-```
-
-In the project directory, run:
-
-```bash
-yarn
-yarn start
-```
-
-If everything went well, you are now running the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 <br/>
 
