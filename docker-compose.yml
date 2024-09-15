@@ -1,0 +1,10 @@
+services:
+  cowrie:
+    image: cowrie/cowrie:latest
+    container_name: cowrie_honeypot
+    volumes:
+      - ./etc:/cowrie/cowrie-git/etc  # Maps the etc directory on the host to the container
+    ports:
+      - "2222:2222"  # Exposes SSH
+      - "2223:2223"  # Exposes Telnet
+    restart: always  # Automatically restarts the container if it crashes
