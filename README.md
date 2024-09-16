@@ -60,8 +60,6 @@ For simulating a brute attack on the decoy ssh host, we are going to use [Medusa
 
 ## ⚙️ Try it for yourself
 
-
-
 ### Requirements:
 
 - Docker ([Instalation instructions for each operating system](https://docs.docker.com/engine/install))
@@ -69,56 +67,57 @@ For simulating a brute attack on the decoy ssh host, we are going to use [Medusa
 - Crunch ([Official instalation source](https://sourceforge.net/projects/crunch-wordlist))
 - Medusa ([Instalation instructions](https://github.com/jmk-foofus/medusa))
 
-Clone the repository locally. Then, navigate to the directory of the cloned repository:
+Firstly, clone this repository locally. Then, navigate to the directory where you cloned it:
 
 ```bash
 git clone https://github.com/mateus-sartorio/ssh-honeypot
 cd ssh-honeypot
 ```
 
-For running Cowrie, we can choose between configuring it to run natively or throuh a docker container. We went with th docker container, and highly recommend you to do the same, as it much faster and simpler, much less likely to run into any problems, and it allows us to concentrate on the experiment itself.
+Next, we need to run Cowrie, and for this, we can choose between running it natively or throuh a docker container. We went with th docker container, and highly recommend you to do the same, as it much faster simpler, less likely to run into any problems and it allows us to concentrate on the experiment itself.
 
-Cowrie provides us with a docker image, that we can configure when creating a container from it. To do so, we can use some default configuration files that should be placed inside a volume. For this experiment, we need only `userdb.txt`, that can be found inside `etc` folder. All other configuration files should be placed here as well. We defined a `root` user with password `ewA9w`.
+Cowrie provides us with a docker image, that we can configured when creating a container from it. To do so, we can use some default configuration files that should be placed inside the `etc` volume in the Cowrie container. For this experiment, we need only `userdb.txt`, that can be found inside `etc` folder of this repository (the `etc` folder is already mapped in the `docker-compose.yml` file to the right directory inside the container, so all cowrie configuration files can be placed inside the `etc` folder of the repository, and should be applied correctly when the container starts). We defined a `root` user with password `ewA9w`.
 
-A list of all possible files and configurations can be found on [Cowrie's official documentation](https://cowrie.readthedocs.io/en/latest/README.html#configuring-cowrie-in-docker).
+A list of all possible files and configurations that can be used with Cowrie can be found on [Cowrie's official documentation](https://cowrie.readthedocs.io/en/latest/README.html#configuring-cowrie-in-docker).
 
-To start you ssh-honeypot, simply run the following command on the cloned repository root directory:
+To start you ssh honeypot, simply run the following command on the cloned repository root directory:
 
 ```bash
 docker compose up
 ```
 
-This should start your decoy ssh host.
+This should start your decoy ssh host, and you should be able to see all logs from cowrie right away.
 
-Before we start using Medusa to try brute force the ssh session, we have to generate a list of possible passwords. Let's suppose that somehow we (the hackers) got an information that the ssh host password contains 5 characters, in the following pattern:
+Before we start using Medusa to try and brute force the ssh session, we have to generate a list of possible passwords. Let's suppose that somehow we (the hackers) got the information that the ssh host password contains 5 characters, in the following pattern:
 
-> 5 — is a minimum or maximum characters number;
-> qwe, ASD, 1234567890 — used characters;
-> @ — lowercase;
-> , — upper case;
-> % — numeric.
+> Lower case characters (@): qwe
+> Upper case characters (,): ASD
+> Numeric (%): 1234567890
+> Pattern: @@,%@
 
-We can create a file container all possible password that match the discovered pattern with the following crunch command:
+We can create a file container all possible passwords that match the discovered pattern with the following crunch command:
 
 ```bash
 crunch 5 5 qwe ASD 1234567890 -t @@,%@ -o ./wordlist.txt
 ```
 
-After that, to use Medusa, we have to create a file containing all possible usernames that we want to try. You can find a template file with some possible usernames in `reference-medusa-files/username.txt`.
+The above command should create a file on the root directory of the cloned repository called `wordlist.txt`. A reference for how this file should be can be found inside the `reference-medusa-files` folder.
 
-We can then user Medusa to try and find the password for some of the users with brute force.
+Before we can proceed to use Medusa, we have yet to create a file containing all possible usernames that we want to try to bruteforce. You can find a template file with some possible usernames in `reference-medusa-files/username.txt`. Feel free to use other usernames, according to how you configured `userdb.txt` inside `etc` configuration directory.
+
+We can then user Medusa to try and find the password for some of the users with brute force. You should pass the `ip` of the machine that hosts the ssh session (`127.0.0.1` or `localhost`, since it is running on your machine), the usernames file, the possible passwords list, the protocol (`ssh`) and the port (`2222` is the default for cowrie).
 
 ```bash
 medusa -h 127.0.0.1 -U ./username.txt -P ./wordlist.txt -M ssh -n 2222
 ```
 
-Finally, we can log into the decoy ssh host with the password we hacked.
+If the right password is in the list of possible passwords you created, Medusa should find it. It will be printed on your terminal, and you can then log in into the ssh session you just 'hacked' with the command:
 
 ```bash
 ssh -p 2222 root@localhost
 ```
 
-All commands that the hacker (us) executes into the ssh session can be seen by the defender (also us) on the    
+Since this is a decoy sessions, the commands you (the hacker) type don't really have any effect on the host, and everything the hacker executes in the session can be seen by the defender (also you) with access to the cowrie terminal.    
 
 <br/>
 
