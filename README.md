@@ -66,7 +66,7 @@ For simulating a brute attack on the decoy ssh host, we are going to use [medusa
 - Crunch ([Official instalation source](https://sourceforge.net/projects/crunch-wordlist))
 - Medusa ([Instalation instructions](https://github.com/jmk-foofus/medusa))
 
-Before starting the experiment, make sure to have docker, cowrie and crunch installed on your machine. For cowrie we will see how to setup and configure.
+Before starting the experiment, make sure to have docker, crunch and medusa installed on your machine. For cowrie we will see how to setup and configure.
 
 Firstly, clone this repository locally. Then, navigate to the directory where you cloned it:
 
