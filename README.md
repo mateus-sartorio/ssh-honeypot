@@ -66,7 +66,7 @@ For simulating a brute attack on the decoy ssh host, we are going to use [Medusa
 
 - Docker ([Instalation instructions for each operating system](https://docs.docker.com/engine/install))
 - Cowrie ([Instalation instructions](https://github.com/cowrie/cowrie))
-- Crunch ([]())
+- Crunch ([Official instalation source](https://sourceforge.net/projects/crunch-wordlist))
 - Medusa ([Instalation instructions](https://github.com/jmk-foofus/medusa))
 
 Clone the repository locally. Then, navigate to the directory of the cloned repository:
@@ -90,17 +90,35 @@ docker compose up
 
 This should start your decoy ssh host.
 
+Before we start using Medusa to try brute force the ssh session, we have to generate a list of possible passwords. Let's suppose that somehow we (the hackers) got an information that the ssh host password contains 5 characters, in the following pattern:
+
+> 5 — is a minimum or maximum characters number;
+> qwe, ASD, 1234567890 — used characters;
+> @ — lowercase;
+> , — upper case;
+> % — numeric.
+
+We can create a file container all possible password that match the discovered pattern with the following crunch command:
+
 ```bash
 crunch 5 5 qwe ASD 1234567890 -t @@,%@ -o ./wordlist.txt
 ```
 
+After that, to use Medusa, we have to create a file containing all possible usernames that we want to try. You can find a template file with some possible usernames in `reference-medusa-files/username.txt`.
+
+We can then user Medusa to try and find the password for some of the users with brute force.
+
 ```bash
-medusa -h 127.0.0.1 -U ~/Desktop/username -P ~/Desktop/wordlist.txt -M ssh -n 2222
+medusa -h 127.0.0.1 -U ./username.txt -P ./wordlist.txt -M ssh -n 2222
 ```
+
+Finally, we can log into the decoy ssh host with the password we hacked.
 
 ```bash
 ssh -p 2222 root@localhost
 ```
+
+All commands that the hacker (us) executes into the ssh session can be seen by the defender (also us) on the    
 
 <br/>
 
