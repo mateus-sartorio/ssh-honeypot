@@ -7,7 +7,7 @@
 
 In this project, we simulate a two sided experiment: an attacker trying to invade an ssh host and a defender running a decoy ssh host (ssh honeypot) to track the actions of the attacker.
 
-Second assignment for the discipline of Computer Security in the Computer Engineering graduation program at Federal University of Espírito Santo.
+This project was created as an assignment for the discipline of Computer Security in the Computer Engineering graduation program at Federal University of Espírito Santo.
 
 <br/>
 
