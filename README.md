@@ -66,6 +66,7 @@ For simulating a brute attack on the decoy ssh host, we are going to use [Medusa
 
 - Docker ([Instalation instructions for each operating system](https://docs.docker.com/engine/install))
 - Cowrie ([Instalation instructions](https://github.com/cowrie/cowrie))
+- Crunch ([]())
 - Medusa ([Instalation instructions](https://github.com/jmk-foofus/medusa))
 
 Clone the repository locally. Then, navigate to the directory of the cloned repository:
@@ -89,10 +90,17 @@ docker compose up
 
 This should start your decoy ssh host.
 
-> [!TIP]
-> If your Node.js version is not 18 or above, it is recommended to use `nvm`, which allows you to install and manage multiple versions of Node.js on your machine.
->
-> [Repository with installation instructions](https://github.com/nvm-sh/nvm)
+```bash
+crunch 5 5 qwe ASD 1234567890 -t @@,%@ -o ./wordlist.txt
+```
+
+```bash
+medusa -h 127.0.0.1 -U ~/Desktop/username -P ~/Desktop/wordlist.txt -M ssh -n 2222
+```
+
+```bash
+ssh -p 2222 root@localhost
+```
 
 <br/>
 
