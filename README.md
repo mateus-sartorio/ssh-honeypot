@@ -63,10 +63,10 @@ For simulating a brute attack on the decoy ssh host, we are going to use [medusa
 
 ### Requirements:
 
-- Docker ([Instalation instructions for each operating system](https://docs.docker.com/engine/install))
-- Cowrie ([Instalation instructions](https://github.com/cowrie/cowrie))
-- Crunch ([Official instalation source](https://sourceforge.net/projects/crunch-wordlist))
-- Medusa ([Instalation instructions](https://github.com/jmk-foofus/medusa))
+- Docker ([instalation instructions for each operating system](https://docs.docker.com/engine/install))
+- Cowrie ([instalation instructions](https://github.com/cowrie/cowrie))
+- Crunch ([official instalation source](https://sourceforge.net/projects/crunch-wordlist))
+- Medusa ([instalation instructions](https://github.com/jmk-foofus/medusa))
 
 Before starting the experiment, make sure to have docker, crunch and medusa installed on your machine. For cowrie we will see how to setup and configure.
 
@@ -81,7 +81,7 @@ Next, we need to run cowrie, and for this, we can choose between running it nati
 
 Cowrie provides us with a docker image, that we can configured when creating a container from it. To do so, we can use some default configuration files that should be placed inside the `etc` volume in the cowrie container. For this experiment, we need only `userdb.txt`, that can be found inside `etc` folder of this repository (the `etc` folder is already mapped in the `docker-compose.yml` file to the right directory inside the container, so all cowrie configuration files can be placed inside the `etc` folder of the repository, and it should be enough to apply them correctly when the container starts). For our tests, we defined a `root` user with password `ewA9w`.
 
-A list of all possible files and configurations that can be used with cowrie can be found on [Cowrie's official documentation](https://cowrie.readthedocs.io/en/latest/README.html#configuring-cowrie-in-docker).
+A list of all possible files and configurations that can be used with cowrie can be found on [cowrie's official documentation](https://cowrie.readthedocs.io/en/latest/README.html#configuring-cowrie-in-docker).
 
 To start you ssh honeypot, simply run the following command on the cloned repository root directory (make sure to have the docker engine running):
 
