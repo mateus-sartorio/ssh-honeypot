@@ -92,8 +92,11 @@ This should start your decoy ssh host, and you should be able to see all logs fr
 Before we start using medusa to try and brute force the ssh session, we have to generate a list of possible passwords. Let's suppose that we (the hackers) somehow got the information that the ssh host password contains 5 characters (maybe some internal leak), in the following pattern:
 
 > Lower case characters (@): qwe
+
 > Upper case characters (,): ASD
+
 > Numeric (%): 1234567890
+
 > Pattern: @@,%@
 
 We can create a file container all possible passwords that match the leaked pattern with the following crunch command:
