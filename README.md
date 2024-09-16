@@ -45,10 +45,10 @@ Telnet was one of the first protocols used for remote access with command-line i
 
 SSH is used mostly for the same purposes of Telnet, but employs strong encryption to protect all data transmitted between the client and server, which prevents eavesdropping and interception. Due to its strong cryptographic protections and additional features such as secure file transfers and port forwarding, SSH has become the standard protocol for secure remote connections, replacing Telnet for most modern applications.
 
-For this experiment, we are going to setup a ssh honeypot, that is, a decoy ssh terminal with weak credentials (commom username and password), and with the help of [medusa](https://github.com/jmk-foofus/medusa), we are going to try and crack the credentials with brute-force.
+For this experiment, we are going to setup a ssh honeypot, that is, a decoy ssh terminal with weak credentials (commom username and password), and with the help of [medusa](https://github.com/jmk-foofus/medusa), we are going to try and crack the credentials with brute force.
 
 
-### 3. Brute-force attacks
+### 3. Brute force attacks
 
 To make a brute force attack to a system means to systematically try all possible combinations of passwords or authentication credentials until the correct one is found. Brute force attacks become viable only if the attacker has a pretty good idea of all possible combinations that the credentials can assume, and their ammount is not impratically big.
 
@@ -109,7 +109,7 @@ crunch 5 5 qwe ASD 1234567890 -t @@,%@ -o ./wordlist.txt
 
 The above command should create a file on the root directory of the cloned repository called `wordlist.txt`. A reference for how this file should be can be found inside the `reference-medusa-files` folder.
 
-Before we can proceed to use medusa, we have yet to create a file containing all possible usernames that we want to try to bruteforce. You can find a template file with some possible usernames in `reference-medusa-files/username.txt`. Feel free to use other usernames, according to how you configured `userdb.txt` inside `etc` configuration directory.
+Before we can proceed to use medusa, we have yet to create a file containing all possible usernames that we want to try to brute force. You can find a template file with some possible usernames in `reference-medusa-files/username.txt`. Feel free to use other usernames, according to how you configured `userdb.txt` inside `etc` configuration directory.
 
 We can then user medusa to try and find the password for some of the users with brute force. You should pass the `ip` of the machine that hosts the ssh session (`127.0.0.1` or `localhost`, since it is running on your machine), the usernames file, the possible passwords list, the protocol (`ssh`) and the port (`2222` is the default for cowrie).
 
